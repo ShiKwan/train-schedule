@@ -10,6 +10,7 @@
   firebase.initializeApp(config);
   database = firebase.database();
 
+
   $("#cmdSubmit").on("click", function(){
     event.preventDefault();
 
@@ -55,20 +56,13 @@
   }
 
   function fnNextArrival(startTime, Frequency){
-    console.log("start time: " + startTime);
     var timeNow = moment().format("HH:mm");
-    console.log("time now: " + timeNow);
     var nextArrival = moment(startTime, "X").format("HH:mm");
-    console.log("next arrival: " + nextArrival);
     diffInDuration = moment.utc(moment(timeNow, "HH:mm").diff(moment(nextArrival,"HH:mm"))).format("HH:mm");
     diffInDuration = moment.duration(diffInDuration).asMinutes();
-    console.log("in minutes: " + diffInDuration);
     //console.log("Wee" + moment.utc(moment(timeNow, "HH:mm").diff(moment(nextArrival,"HH:mm"))).format("HH:mm"));
     while(moment(timeNow, "HH:mm").isAfter(moment(nextArrival, "HH:mm"))){
-      console.log("New while loop Time Now: " + moment(timeNow, "HH:mm").format("HH:mm"));
-      console.log("New while loop Next Arrival: " + moment(nextArrival, "HH:mm").format("HH:mm"));
       nextArrival = moment(nextArrival, "HH:mm").add(Frequency, "minutes");
-      console.log("next arrival in new while loop: " + moment(nextArrival, "HH:mm").format("HH:mm"));
     }
     return moment(nextArrival, "HH:mm").format("HH:mm");
 
@@ -84,30 +78,73 @@
       return nextArrival;*/
   }
 
+  var intervalTimer, clockRunning;
+  function timerInterval(time){
+    var timer = {
+      time : time,
+      stop: function(){
+        clearInterval(intervalTimer);
+        clockRUnning: false;
+      },
+      start: function(){
+        setInterval(intervalTimer, 60*1000);
+        clockRunning: true;
+      },
+      count: function(){
+if(timerInterval.time > 0){
+          timerInterval.time--;
+          RefreshOnChildAdded();
+        }else{
+          timerInterval.stop();
+           RefreshOnChildAdded();
+        }
+      }
+    }    
+  }
+  RefreshOnChildAdded()
+  setInterval(function() {
+    RefreshOnChildAdded()
+  }, 60*1000);
+
+
+var i = 0;
+
+function RefreshOnChildAdded(){
+  $("#tblTrainInfo").empty();
+
+  var thName = $("<th>");
+  var thDestination = $("<th>");
+  var thFrequency = $("<th>");
+  var thNextArrival = $("<th>");
+  var thMinutesArrival = $("<th>");
+  thName.text("Train Name");
+  thDestination.text("Destination");
+  thFrequency.text("Frequency (min)");
+  thNextArrival.text("Next Arrival");
+  thMinutesArrival.text("Minutes Away");
+  $("#tblTrainInfo").prepend(thMinutesArrival).prepend(thNextArrival).prepend(thFrequency).prepend(thDestination).prepend(thName);
+
   database.ref().on("child_added", function(childSnapshot){
+
       console.log(childSnapshot.val());
 
       // Store everything into a variable.
       var trainName = childSnapshot.val().name;
       var trainDestination = childSnapshot.val().destination;
       var trainStart = moment.unix(childSnapshot.val().start).format("HH:mm");
-      console.log("train start: " + trainStart);
       var trainFrequency = childSnapshot.val().frequency;
       var trainNextArrival = moment(fnNextArrival(childSnapshot.val().start, trainFrequency),"HH:mm").format("HH:mm");
-      var trainMinutesArrival = moment("HH:mm").diff(moment(trainNextArrival, "HH:mm"));
-      console.log("minutes arrival: " + trainMinutesArrival);
+      console.log(moment(trainNextArrival, "HH:mm"));
+      var currentTime = moment().format("HH:mm")
+      console.log(currentTime)
+     
 
-      var thName = $("<th>");
-      var thDestination = $("<th>");
-      var thFrequency = $("<th>");
-      var thNextArrival = $("<th>");
-      var thMinutesArrival = $("<th>");
-      thName.text("Train Name");
-      thDestination.text("Destination");
-      thFrequency.text("Frequency (min)");
-      thNextArrival.text("Next Arrival");
-      thMinutesArrival.text("Minutes Away");
-      $("#tblTrainInfo").prepend(thMinutesArrival).prepend(thNextArrival).prepend(thFrequency).prepend(thDestination).prepend(thName);
+      var test = moment(trainNextArrival, "HH:mm").toNow(true);
+      var trainMinutesArrival = moment(trainNextArrival,"HH:mm").diff(moment(currentTime, "HH:mm"), "minutes");
+      console.log("freq : " + trainFrequency + ", current : " + parseInt(trainMinutesArrival));
+       percentageToArrive = (trainMinutesArrival/trainFrequency) * 100;
+      console.log("test: " + test);
+      console.log(trainMinutesArrival);
 
       var trTrainInfo = $("<tr>");
       var tdName = $("<td>");
@@ -115,6 +152,12 @@
       var tdFrequency = $("<td>");
       var tdNextArrival = $("<td>");
       var tdMinutesArrival = $("<td>");
+      var divMinutesArrival = $("<div>");
+      divMinutesArrival.addClass("progress-bar-success progress-bar");
+      divMinutesArrival.attr("role", "progressbar").attr("aria-valuenow", parseInt(trainMinutesArrival)).attr("aria-valuemin", 0).attr("aria-valuemax", trainFrequency);
+      divMinutesArrival.text(trainMinutesArrival);
+
+      tdMinutesArrival.addClass("addMinutes");
 
       tdName.text(trainName);
       tdDestination.text(trainDestination);
@@ -123,10 +166,5 @@
       tdMinutesArrival.text(trainMinutesArrival);
       trTrainInfo.append(tdName).append(tdDestination).append(tdFrequency).append(tdNextArrival).append(tdMinutesArrival);
       $("#tblTrainInfo").append(trTrainInfo);
-
-      // Employee Info
-/*      console.log(trainName);
-      console.log(trainDestination);
-      console.log(trainStart);
-      console.log(trainFrequency);*/
-     });
+    });
+  }

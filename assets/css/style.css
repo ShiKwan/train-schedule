@@ -5,13 +5,11 @@
 	display: none;
 }
 html body{
-	font-family: 'Bowlby+One+SC', cursive;
 }
 
 .h1, .h2 {
 	text-align: center;
 	padding-top: 2%;
-	font-family: 'Frijole', cursive;
 }
 
 .imgImage{
