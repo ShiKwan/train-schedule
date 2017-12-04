@@ -64,9 +64,15 @@
     diffInDuration = moment.duration(diffInDuration).asMinutes();
     console.log("in minutes: " + diffInDuration);
     //console.log("Wee" + moment.utc(moment(timeNow, "HH:mm").diff(moment(nextArrival,"HH:mm"))).format("HH:mm"));
+    while(moment(timeNow, "HH:mm").isAfter(moment(nextArrival, "HH:mm"))){
+      console.log("New while loop Time Now: " + moment(timeNow, "HH:mm").format("HH:mm"));
+      console.log("New while loop Next Arrival: " + moment(nextArrival, "HH:mm").format("HH:mm"));
+      nextArrival = moment(nextArrival, "HH:mm").add(Frequency, "minutes");
+      console.log("next arrival in new while loop: " + moment(nextArrival, "HH:mm").format("HH:mm"));
+    }
+    return moment(nextArrival, "HH:mm").format("HH:mm");
 
-
-    while(diffInDuration > Frequency){
+   /* while(diffInDuration > Frequency){
       console.log("diff in duration : " + diffInDuration);
       console.log("Frequency: " + Frequency);
       nextArrival = moment(startTime, "HH:mm").add(Frequency, "minutes").format("HH:mm");
@@ -75,7 +81,7 @@
       diffInDuration = diffInDuration - Frequency;
     }
     console.log(nextArrival);
-      return nextArrival;
+      return nextArrival;*/
   }
 
   database.ref().on("child_added", function(childSnapshot){
@@ -87,7 +93,9 @@
       var trainStart = moment.unix(childSnapshot.val().start).format("HH:mm");
       console.log("train start: " + trainStart);
       var trainFrequency = childSnapshot.val().frequency;
-      var trainNextArrival = moment(fnNextArrival(childSnapshot.val().start, trainFrequency),"X").format("HH:mm");
+      var trainNextArrival = moment(fnNextArrival(childSnapshot.val().start, trainFrequency),"HH:mm").format("HH:mm");
+      var trainMinutesArrival = moment("HH:mm").diff(moment(trainNextArrival, "HH:mm"));
+      console.log("minutes arrival: " + trainMinutesArrival);
 
       var thName = $("<th>");
       var thDestination = $("<th>");
@@ -112,7 +120,7 @@
       tdDestination.text(trainDestination);
       tdFrequency.text(trainFrequency);
       tdNextArrival.text(trainNextArrival);
-      tdMinutesArrival.text(0);
+      tdMinutesArrival.text(trainMinutesArrival);
       trTrainInfo.append(tdName).append(tdDestination).append(tdFrequency).append(tdNextArrival).append(tdMinutesArrival);
       $("#tblTrainInfo").append(trTrainInfo);
 

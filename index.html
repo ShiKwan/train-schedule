@@ -62,6 +62,11 @@ console.log(moment.utc(moment(i,"HH:mm").diff(moment(j,"HH:mm"))).format("HH:mm"
 			console.log("i < j");
 			i = i.add(30, "minutes");
 		}
+
+		console.log(moment(i, "HH:mm").isBefore(moment(j, "HH:mm")));
+		i = moment(i, "HH:mm").add(30, "minutes");
+		console.log("added: " + moment(i, "HH:mm").format("HH:mm") );
+
 	</script>
 </body>
 </html>
