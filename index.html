@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<title></title>
+	<title>Train Schedule</title>
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -13,44 +13,71 @@
 
 </head>
 <body>
-	<div class="wrapper">
-		<div class="jumbotron">
-			<div class="container">
-				<table id="tblTrainInfo" class="table table-hover ">
-					<tbody>
-						<tr>
-							<h1>Current Train Schedule</h1>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid clearfix">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		    <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#">Train Schedule</a>
 		</div>
 
-		
-			<div class="jumbotron">
-				<form>
-				<div class="container">
-					<h1>Add Train</h1>
-					<div class="form-group">
-						<label for="lblTrainName">Train Name</label>
-						<input class="form-control new" id="txtTrainName" placeholder="Train Name">
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+		    <li class="active"><a href="index.html">Home<span class="sr-only">(current)</span></a></li>
+		  </ul>
+		</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div class="wrapper">
+		<div class="container">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+	              <h3 class="panel-title">Current Train Schedule</h3>
+	            </div>
+	            <div class="panel-body">
+					<div class="container">
+						<table id="tblTrainInfo" class="table table-hover ">
+							<tbody>
+							</tbody>
+						</table>
 					</div>
-					<div class="form-group">
-						<label for="lblDestination">Destination</label>
-						<input class="form-control new" id="txtDestination" placeholder="Destination">
-					</div>
-					<div class="form-group">
-						<label for="lblFirstTrain">First Train  Time (HH:mm - military time)</label>
-						<input class="form-control new" id="txtFirstTrain" placeholder="First Train Time">
-					</div>
-					<div class="form-group">
-						<label for="lblFrequency">Frequency (min)</label>
-						<input class="form-control new" id="txtFrequency" placeholder="Frequency">
-					</div>
-					<button id="cmdSubmit" type="submit" class="btn btn-default cmdSubmit">Submit</button>
 				</div>
-				</form>
 			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+		              <h3 class="panel-title">Add Train</h3>
+	            </div>
+	            <div class="panel-body">
+	            	<div class="container">
+						<form role="form">	
+							<div class="form-group">
+								<label for="lblTrainName">Train Name</label>
+								<input class="form-control new" id="txtTrainName" placeholder="Train Name">
+							</div>
+							<div class="form-group">
+								<label for="lblDestination">Destination</label>
+								<input class="form-control new" id="txtDestination" placeholder="Destination">
+							</div>
+							<div class="form-group">
+								<label for="lblFirstTrain">First Train  Time (HH:mm - military time)</label>
+								<input class="form-control new" id="txtFirstTrain" placeholder="First Train Time">
+							</div>
+							<div class="form-group">
+								<label for="lblFrequency">Frequency (min)</label>
+								<input class="form-control new" id="txtFrequency" placeholder="Frequency">
+							</div>
+							<button id="cmdSubmit" type="submit" class=" text-center btn btn-primary cmdSubmit">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<!-- jQuery, javascript file for the Bootstrap's javascript file to function -->
@@ -63,20 +90,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="assets/javascript/app.js"></script>
 	<script type="text/JavaScript">
-var i  = "15:00";
-var j = "14:20";
-
-console.log(moment.utc(moment(i,"HH:mm").diff(moment(j,"HH:mm"))).format("HH:mm"));
-
-		while(moment(i).diff(moment(j),"minutes") > 30){
-			console.log("i < j");
-			i = i.add(30, "minutes");
-		}
-
-		console.log(moment(i, "HH:mm").isBefore(moment(j, "HH:mm")));
-		i = moment(i, "HH:mm").add(30, "minutes");
-		console.log("added: " + moment(i, "HH:mm").format("HH:mm") );
-
 	</script>
 </body>
 </html>

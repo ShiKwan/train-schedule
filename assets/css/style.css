@@ -30,6 +30,9 @@ html body{
 	margin: 0 20% 0 20%;
 	background-color: rgba(0, 0, 0, 0.2);
 }
+.form-group{
+	padding-top: 5px;
+}
 
 .divMultipleChoices .btn{
 	margin: 50px 20px 0 20px;
@@ -37,4 +40,8 @@ html body{
 
 #btnStart{
 	margin:10% 0 20% 0;
+}
+
+.form-control.new{
+	width:95% !important;
 }

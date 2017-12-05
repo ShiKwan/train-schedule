@@ -47,14 +47,6 @@
     $("#txtFirstTrain").val("");
   })
 
-  var trainInfo = {
-    name : ["Trenton Express", "Oregon Trail", "Midnight Carriage", "Sing Sing Caravan", "Boston Bus", "California Caravan", "Analben's Train"],
-    destination: ["Trenton", "Salem, Oregon", "Philadelphia", "Atlanta", "Boston", "San Fransisco", "Florida"],
-    frequency: [25, 3600, 15, 45, 65, 6000, 25],
-    nextArrival: ["9:00", "9:15", "10:00", "9:00", "8:30", "8:00", "6:00"],
-    minutesArrival: [0, 0, 0, 0, 0, 0, 0]
-  }
-
   function fnNextArrival(startTime, Frequency){
     var timeNow = moment().format("HH:mm");
     var nextArrival = moment(startTime, "X").format("HH:mm");
@@ -65,17 +57,6 @@
       nextArrival = moment(nextArrival, "HH:mm").add(Frequency, "minutes");
     }
     return moment(nextArrival, "HH:mm").format("HH:mm");
-
-   /* while(diffInDuration > Frequency){
-      console.log("diff in duration : " + diffInDuration);
-      console.log("Frequency: " + Frequency);
-      nextArrival = moment(startTime, "HH:mm").add(Frequency, "minutes").format("HH:mm");
-      console.log("within while loops: " + moment(nextArrival, "x").format("HH:mm"));
-
-      diffInDuration = diffInDuration - Frequency;
-    }
-    console.log(nextArrival);
-      return nextArrival;*/
   }
 
   var intervalTimer, clockRunning;
@@ -104,7 +85,7 @@ if(timerInterval.time > 0){
   RefreshOnChildAdded()
   setInterval(function() {
     RefreshOnChildAdded()
-  }, 60*1000);
+  }, 15*1000);
 
 
 var i = 0;
