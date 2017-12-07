@@ -39,6 +39,8 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 	              <h3 class="panel-title">Current Train Schedule</h3>
+	              <h4 class="text-right dayNow"></h4>
+	              <h4 class="text-right timeNow"></h4>
 	            </div>
 	            <div class="panel-body">
 					<div class="container">
@@ -90,6 +92,14 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="assets/javascript/app.js"></script>
 	<script type="text/JavaScript">
+		$(".timeNow").text(moment().format("HH:mm:ss"));
+		$(".dayNow").text(moment().format("ddd, MMM-DD-YYYY"));
+		var Interval;
+		Interval = setInterval(function(){
+			$(".timeNow").text(moment().format("HH:mm:ss a"));
+		},1000);
+
+		
 	</script>
 </body>
 </html>

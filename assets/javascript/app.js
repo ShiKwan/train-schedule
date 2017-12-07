@@ -44,7 +44,7 @@
     $("#txtTrainName").val("");
     $("#txtDestination").val("");
     $("#txtFirstTrain").val("");
-    $("#txtFirstTrain").val("");
+    $("#txtFrequency").val("");
   })
 
   function fnNextArrival(startTime, Frequency){
@@ -68,7 +68,7 @@
         clockRUnning: false;
       },
       start: function(){
-        setInterval(intervalTimer, 60*1000);
+        setInterval(intervalTimer, 2*1000);
         clockRunning: true;
       },
       count: function(){
